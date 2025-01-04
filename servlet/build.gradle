@@ -1,0 +1,37 @@
+plugins {
+    id 'war'
+    id 'org.gretty' version '4.1.5'
+    id 'pmd'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation group: 'com.fasterxml.jackson.core',
+            name: 'jackson-databind',
+            version: '2.17.0'
+
+    compileOnly group: 'jakarta.servlet',
+            name: 'jakarta.servlet-api',
+            version: '6.1.0'
+
+}
+
+gretty {
+    contextPath = '/'
+}
+
+/*
+pmd {
+    consoleOutput = true
+    toolVersion = "7.5.0"
+    ruleSets = [ "...path to.../pmd/ruleset.xml" ]
+}
+*/
