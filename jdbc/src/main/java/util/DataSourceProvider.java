@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class DataSourceProvider {
 
-    private static ConnectionInfo connectionInfo;
+    public static ConnectionInfo connectionInfo;
     private static BasicDataSource dataSource;
 
     public static void setConnectionInfo(ConnectionInfo connectionInfo) {

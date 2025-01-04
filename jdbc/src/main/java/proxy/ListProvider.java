@@ -4,8 +4,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ListProvider {
 
@@ -15,25 +19,35 @@ public class ListProvider {
 
         logger.debug("ListProvider.getList() called");
 
+        MyList realObject = new MyListImpl();
+
         MyList proxy = (MyList) Proxy.newProxyInstance(
                 Thread.currentThread().getContextClassLoader(),
-                new Class[] { MyList.class },
-                new DynamicInvocationHandler());
+                new Class[]{MyList.class},
+                new DynamicInvocationHandler(realObject));
 
-        return new MyListImpl();
+        return proxy;
     }
 
     private static class DynamicInvocationHandler implements InvocationHandler {
 
+        private final MyList realObject;
+
+        public DynamicInvocationHandler(MyList realObject) {
+            this.realObject = realObject;
+        }
+
         @Override
-        public Object invoke(Object proxy, Method method, Object[] args) {
+        public Object invoke(Object proxy, Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
 
-            // this will be called for every method that is invoked on the proxy
+            var stream = args == null ? Stream.empty() : Arrays.stream(args);
 
-            // delegate to underlying object
-            // method.invoke(object, args);
+            String collect = stream.map(Object::toString).collect(Collectors.joining(", "));
 
-            return null;
+            logger.debug("%s(%s)".formatted(method.getName(), collect));
+
+            return method.invoke(realObject, args);
+
         }
     }
 }
