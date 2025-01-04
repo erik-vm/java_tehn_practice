@@ -1,8 +1,14 @@
 package records;
 
+import lombok.Builder;
+import lombok.With;
+
 import java.util.Collections;
 import java.util.List;
 
+
+@With // helps to create new records coping values from the old one
+@Builder // helps to create new records one value at the time
 public record Task(Long id, String name, String description, boolean completed, List<String> parameters) {
 
     public Task(Long id, String name, String description, boolean completed, List<String> parameters) {

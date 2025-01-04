@@ -22,16 +22,20 @@ dependencies {
             name: 'jakarta.servlet-api',
             version: '6.1.0'
 
+
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
 }
 
 gretty {
     contextPath = '/'
 }
 
-/*
-pmd {
-    consoleOutput = true
-    toolVersion = "7.5.0"
-    ruleSets = [ "...path to.../pmd/ruleset.xml" ]
-}
-*/
+
+//pmd {
+//    consoleOutput = true
+//    toolVersion = "7.5.0"
+//    ruleSets = [ "...path to.../pmd/ruleset.xml" ]
+//}
+
