@@ -1,0 +1,75 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+}
+
+def springVersion = '6.1.13'
+def log4jVersion = '2.23.1'
+def lombokVersion = '1.18.34'
+def hsqldbVersion = '2.7.3'
+def aspectjWeaverVersion = '1.9.22'
+def postgresVersion = '42.7.3'
+
+dependencies {
+
+    implementation group: 'org.springframework',
+            name: 'spring-context',
+            version: springVersion
+
+    implementation group: 'org.springframework',
+            name: 'spring-jdbc',
+            version: springVersion
+
+    implementation group: 'org.springframework',
+            name: 'spring-aop',
+            version: springVersion
+
+    implementation group: 'org.aspectj',
+            name: 'aspectjweaver',
+            version: aspectjWeaverVersion
+
+    implementation group: 'org.postgresql',
+            name: 'postgresql',
+            version: postgresVersion
+
+    implementation group: 'org.hsqldb',
+            name: 'hsqldb',
+            version: hsqldbVersion
+
+    implementation group: 'org.apache.logging.log4j',
+            name: 'log4j-api',
+            version: log4jVersion
+
+    implementation group: 'org.apache.logging.log4j',
+            name: 'log4j-core',
+            version: log4jVersion
+
+    compileOnly group: 'org.projectlombok',
+            name: 'lombok',
+            version: lombokVersion
+
+    annotationProcessor group: 'org.projectlombok',
+            name: 'lombok',
+            version: lombokVersion
+
+}
+
+tasks.register('runMain', JavaExec) {
+    mainClass.set('main.Main')
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+tasks.register('runDemo', JavaExec) {
+    mainClass.set('demo.Main')
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+// linux/mac: export SPRING_PROFILES_ACTIVE=prod
+// win: set SPRING_PROFILES_ACTIVE=prod
