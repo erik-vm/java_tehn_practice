@@ -11,14 +11,14 @@
             <AppenderRef ref="Console"/>
         </Root>
 
-        <Logger name="aop"
+        <Logger name="service"
                 level="INFO"
                 additivity="false">
 
             <AppenderRef ref="Console"/>
         </Logger>
 
-        <Logger name="demo.LoggingAspect"
+        <Logger name="service.EmailService"
                 level="DEBUG"
                 additivity="false">
 

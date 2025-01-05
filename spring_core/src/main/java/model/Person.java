@@ -6,6 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
+@With
 public class Person {
 
     private Long id;

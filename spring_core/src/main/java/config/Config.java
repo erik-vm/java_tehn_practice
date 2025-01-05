@@ -1,24 +1,37 @@
 package config;
 
-import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import service.TransferService;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import javax.sql.DataSource;
 
+@ComponentScan(basePackages = {"service", "main", "aop"})
+@PropertySource("classpath:application.properties")
+@EnableAspectJAutoProxy
 public class Config {
 
-    public TransferService transferService() {
-        return new TransferService();
-    }
+//    @Bean
+//    public TransferService transferService() {
+//        return new TransferService();
+//    }
 
-    public DataSource dataSource(Environment env) {
-        DriverManagerDataSource ds = new DriverManagerDataSource();
-        ds.setDriverClassName("org.postgresql.Driver");
-        ds.setUsername(env.getProperty("postgres.user"));
-        ds.setPassword(env.getProperty("postgres.pass"));
-        ds.setUrl(env.getProperty("postgres.url"));
-        return ds;
+    @Bean
+    public JdbcClient jdbcClient(DataSource dataSource) {
+
+        var populator = new ResourceDatabasePopulator(
+                new ClassPathResource("schema.sql"),
+                new ClassPathResource("data.sql"));
+
+        DatabasePopulatorUtils.execute(populator, dataSource);
+
+
+        return JdbcClient.create(dataSource);
     }
 
 }
