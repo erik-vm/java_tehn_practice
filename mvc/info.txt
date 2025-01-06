@@ -1,0 +1,33 @@
+@ComponentScan(basePackages = {"controller", "dao"})
+- Mis pakettidest spring komponente otsib.
+
+Environment env;
+- Sõltuvus, kust saab küsida välisest failist loetud muutujaid.
+
+@RestController
+- See komponent hakkab vastu võtma http päringuid vastavalt edasistele mapping-utele.
+
+@PostMapping("/posts")
+- Ütleb Spring Mvc-le, et kui tuleb POST päring aadressile "/posts", siis käivitada see meetod.
+
+@RequestBody
+- Ütleb, et järgnevasse parameetrisse tuleks päringust tulnud Json map-ida.
+
+@Valid
+- Ütleb, et antud päringust tulnud infot tuleb valideerida vastavalt JSR303 annotatsioonidele.
+
+@PathVariable("personId") Long personId
+- Ütleb Spring Mvc-le, et päringus olev parameeter personId tuleb panna muutujasse
+
+@RestControllerAdvice
+- Selles komponendis on meetodid, mis kehtivad kõigi kontrollerite koha.
+
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+- Http päringu vastuse koodiks on 400.
+
+@ExceptionHandler
+- Sellega märgistatud meetod on vigade püüdmiseks.
+
+@ResponseBody
+- Meetodi poolt tagastatu tuleb kliendile saata.
+  Rakendustes, mis genereerivad html-i on teistsugune käitumine.
