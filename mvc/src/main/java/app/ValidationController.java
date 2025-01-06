@@ -1,5 +1,7 @@
 package app;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
 import model.Post;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import validation.ValidationErrors;
 
 import jakarta.validation.Valid;
+
 import java.util.List;
 
 @RestController
@@ -17,9 +20,17 @@ public class ValidationController {
     @PostMapping("manual-validation")
     public ResponseEntity<Object> manualValidation(@RequestBody Post post) {
 
+
+        var validator = Validation.buildDefaultValidatorFactory().getValidator();
+        var violations = validator.validate(post);
+
         ValidationErrors errors = new ValidationErrors();
 
-        // validation code goes here
+        for (ConstraintViolation<Post> violation : violations) {
+
+            errors.addErrorMessage(violation.getMessage());
+
+        }
 
         if (errors.hasErrors()) {
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
@@ -31,21 +42,6 @@ public class ValidationController {
     @PostMapping("validation")
     public void validation(@RequestBody @Valid Post post) {
         System.out.println(post);
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ValidationErrors handleValidationError(
-            MethodArgumentNotValidException exception) {
-
-        List<FieldError> errors = exception.getBindingResult().getFieldErrors();
-
-        System.out.println(errors);
-
-        ValidationErrors result = new ValidationErrors();
-
-        // add errors to the result
-
-        return result;
     }
 
 }

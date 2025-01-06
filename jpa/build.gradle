@@ -1,0 +1,62 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+}
+
+def springVersion = '6.1.14'
+def postgresVersion = '42.7.3'
+def hsqlVersion = '2.7.3'
+def log4jVersion = '2.23.1'
+def lombokVersion = '1.18.34'
+def hibernateVersion = '6.6.1.Final'
+
+dependencies {
+
+    implementation group: 'org.springframework',
+            name: 'spring-context',
+            version: springVersion
+
+    implementation group: 'org.springframework',
+            name: 'spring-orm',
+            version: springVersion
+
+    implementation group: 'org.hibernate',
+            name: 'hibernate-core',
+            version: hibernateVersion
+
+    implementation group: 'org.postgresql',
+            name: 'postgresql',
+            version: postgresVersion
+
+    implementation group: 'org.hsqldb',
+            name: 'hsqldb',
+            version: hsqlVersion
+
+    implementation group: 'org.apache.logging.log4j',
+            name: 'log4j-api',
+            version: log4jVersion
+
+    implementation group: 'org.apache.logging.log4j',
+            name: 'log4j-core',
+            version: log4jVersion
+
+    compileOnly group: 'org.projectlombok',
+            name: 'lombok',
+            version: lombokVersion
+
+    annotationProcessor group: 'org.projectlombok',
+            name: 'lombok',
+            version: lombokVersion
+}
+
+tasks.register('runDb', JavaExec) {
+    mainClass.set('main.HsqlServer')
+    classpath = sourceSets.main.runtimeClasspath
+}

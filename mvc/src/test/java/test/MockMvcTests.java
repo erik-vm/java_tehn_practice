@@ -1,6 +1,8 @@
 package test;
 
 import app.PostController;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import conf.MvcConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +14,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import validation.ValidationError;
+import validation.ValidationErrors;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
@@ -24,7 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = { MvcConfig.class })
+@ContextConfiguration(classes = {MvcConfig.class})
 public class MockMvcTests {
 
     private WebApplicationContext ctx;
@@ -54,7 +58,9 @@ public class MockMvcTests {
     @Test
     public void showErrorsOnInvalidInput() throws Exception {
 
-        MockHttpServletResponse response = null; // simulatePost(...
+        String json = "{}";
+
+        MockHttpServletResponse response = simulatePost("/posts", json);
 
         var errors = getErrorCodes(response.getContentAsString());
 
@@ -68,20 +74,22 @@ public class MockMvcTests {
     @Test
     public void noErrorsOnValidData() {
 
-        MockHttpServletResponse response = null; // simulatePost(...
+        String json = "{\"text\": \"aa\", \"title\":\"bb\"}";
+
+        MockHttpServletResponse response = simulatePost("/posts", json);
 
         assertThat(response.getStatus(), is(201));
-   }
+    }
 
     private MockHttpServletResponse simulatePost(String url, String input) {
         MockMvc mvc = MockMvcBuilders.webAppContextSetup(ctx).build();
 
         try {
             return mvc.perform(post(url)
-                     .content(input)
-                     .header("Content-type", "application/json"))
-                  .andReturn()
-                  .getResponse();
+                            .content(input)
+                            .header("Content-type", "application/json"))
+                    .andReturn()
+                    .getResponse();
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -89,9 +97,13 @@ public class MockMvcTests {
     }
 
     private List<String> getErrorCodes(String json) {
-        // parse error codes from json ...
+        try {
+            ValidationErrors errors = new ObjectMapper().readValue(json, ValidationErrors.class);
 
-        return Collections.emptyList();
+            return errors.getErrors().stream().map(ValidationError::getCode).toList();
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

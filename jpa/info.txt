@@ -1,0 +1,54 @@
+@PersistenceContext private EntityManager em;
+  ütleb, et siia tuleb süstida EntityManager-i sõltuvus.
+  @Autowired ei ole siin piisav, kuna EntityManager peab olema seotud
+  andmebaasiga ja iga kasutaja peab saama uue koopia jne.
+
+@Entity - ütleb, et seda klassi peab olema võimalik andmebaasi salvestada.
+
+@Id - ütleb, et seda välja kasutatakse andmebaasis id-na.
+
+@GeneratedValue - ütleb, et sellele väljale peab andmebaasi ise väärtuse panema.
+
+@SequenceGenerator(name = "my_seq", sequenceName = "<järjendi nimi>", allocationSize = 1)
+@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "my_seq")
+  See komplekt ütleb, et id väärtused tuleb võtta järjendist (sequence) nimega <järjendi nimi>.
+
+@OneToOne(cascade = CascadeType.ALL)
+@JoinColumn(name = "<välisvõtme veerg>")
+  See komplekt mingil väljal ütleb, et see väli viitab seosele teises tabelis.
+  Seose hoidmiseks andmebaasis on väli <välisvõtme veerg>.
+  CascadeType.ALL ütleb, et kui salvestatakse kirjet, kus antud annotatsioonid on,
+  siis tuleb salvestada ka sõltuval kirel tehtud muudatused.
+
+@ElementCollection
+@CollectionTable(
+        name = "<alamkirjete tabeli nimi>",
+        joinColumns=@JoinColumn(name = "<alamtabeli välisvõtme välja nimi>",
+                referencedColumnName = "<peatabeli id välja nimi>")
+)
+  See komplekt mingil kollektsiooni tüüpi väljal määrab, et alamkirjed asuvad tabelis
+  <alamkirjete tabeli nimi> ja kirjete vaheline seos on määratud väljadega
+  <alamtabeli välisvõtme välja nimi> ja <peatabeli id välja nimi>
+
+@Embeddable - ütleb, et seda tüüpi objektid tuleb salvestada eraldi tabelisse.
+              Erinevus @Entity-ga märgitud objektidest on see, et nendel pole id välja.
+              Seda tüüpi objektid eksisteerivad ainult koos neid koondava objektiga.
+
+factory.setPackagesToScan("model");
+  ütleb, et sellest paketist tuleb otsida @Entity ja @Embeddable annotatsiooniga
+  märgistatud klasse.
+
+properties.put("hibernate.hbm2ddl.auto", "update");
+  ütleb, et olemasolevat skeemi tuleb uuendada või kui see puudub, siis uus luua.
+
+properties.put("hibernate.show_sql", true);
+  ütleb, et näidata välja millised päringud andmebaasi saadetakse.
+
+@Transactional
+  ütleb, et selle meetodi alguses tuleb alustada transaktsiooniga
+  ja meetodi lõppedes alustatud transaktsioon lõpetada (commit) ja
+  et ühendus tuleb lahti hoida meetodi kestel.
+
+@Table(name = "<tabeli nimi>") - määrab tabeli nime, kuhu seda tüüpi objektid salvestada.
+
+@Column(name = "<välja nimi>") - määrab veeru nime, kuhu selle välja sisu salvestada.

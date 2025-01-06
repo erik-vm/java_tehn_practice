@@ -1,6 +1,7 @@
 package validation;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.FieldError;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@ToString
 public class ValidationErrors {
 
     @Getter
