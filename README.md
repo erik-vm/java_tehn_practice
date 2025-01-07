@@ -16,3 +16,11 @@
 2) Understand the process of defining and creating beans to ensure your program functions properly.
 3) Explore different methods of logging to the console for better tracking and debugging.
 4) Discover how to access classes with specific annotations and perform tasks on them effectively.
+
+### MVC Exercise
+#### This exercise focuses on the following topics:
+
+1) Practice using controllers and testing them from the client side.
+2) Define validation requirements within the model.
+3) Validate inputs in the controllers and create a general validation class.
+4) Create and run tests for the controllers and validation processes.
