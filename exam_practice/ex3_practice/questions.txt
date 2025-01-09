@@ -1,0 +1,100 @@
+Teooriaküsimused
+
+  Teooriaküsimustele saate vastata 20 minuti jooksul alates eksami algusest.
+
+  Vastused kirjutage siiasamasse faili küsimuse alla.
+  Iga küsimuse vastus peab jääma alla 200 märgi.
+  Iga küsimus annab kuni 5 punkti.
+
+  1. Kuidas saavad Listener klassid (@WebListener) ja servletid omavahel infot vahetdada?
+
+     ... vastus tuleb siia ...
+
+  2. Sql lausete parameetrite määramine stringe kokku liites võib võimaldada
+     Sql Injection rünnakut. Nimetage mõni teine probleem, miks see lähenemine hea pole.
+
+     ... vastus tuleb siia ...
+
+  3. Mis on Spring Core raamistiku kasutamine teeb koodi paindlikumaks.
+     Mida selle paindlikkuse all mõeldud on?
+
+     ... vastus tuleb siia ...
+
+  4. Mida tähistab allolevas koodis sõne "abc"?
+
+     connection.prepareStatement(sql, new String[] { "abc" });
+
+     ... vastus tuleb siia ...
+
+  5. Mis mõju omab allolevas koodis FetchType.LAZY?
+
+     @ElementCollection(fetch = FetchType.LAZY) private List<Phone> phones;
+
+     ... vastus tuleb siia ...
+
+  6. Bcrypt algoritm lisab räsi arvutamisel automaatselt salasõnale soola (salt)
+     mis kasu sellest soolast on?
+
+     ... vastus tuleb siia ...
+
+Ülesanne 1 (15 punkti)
+
+  Paketis "mvc" on Spring Mvc rakenduse toorik. Muutke klasse Ctrl, A ja B nii,
+  et POST päring aadressile /calculate arvutaks sisendi põhjal soovitud väärtuse.
+
+      Sisend: [{"a": 1}, {"b": 2}, {"c": 7}]
+      Väljund: {"values": [1, 2, 7], "sum": 10}
+
+      Sisend: [{"a": 1}, {"b": 2}, {"a": 3}, {"c": 5}, ...]
+      Väljund: {"values": [1, 2, 3, 5, ...], "sum": 11 + <mis väärtused edasi tulevad>}
+
+  Ehk rakendus tagastab võtmete a, b ja c väärtused listina ja kokku liidetuna.
+
+  Sisendi töötluseks peate kasutama Spring Mvc võimalusi. Tekstist käsitsi
+  töötlemine (split, replace, match jne) ei ole lubatud. Väljundi Json-it ei
+  tohi sõnede liitmise teel luua.
+
+  Muuta võte vaid klasse Ctrl, A ja B. Uusi klasse luua ei või.
+
+  Rakendus peab läbima testid klassist MvcTest.
+
+Ülesanne 2 (15 punkti)
+
+  Paketis "spring" on Spring raamistiku konfiguratsioon (Config.java) ja mõned klassid.
+
+  Kirjutage selline konfiguratsioon, et kontekstilt saaks küsida järgmisi asju.
+
+  1. DataSource tüüpi objekti, mis on tehtud DataSourceBuilder abil. Url-i peaks
+     lugema failist application.properties võtme "db.url" alt.
+
+     Näide: DataSource ds = DataSourceBuilder.buildDataSourceWithUrl("someUrl");
+
+  2. ProductDao1 tüüpi objekti, millele on peale pandud eelmises ülesandes määratud DataSource.
+
+  3. ProductDao2 tüüpi objekti, mille väljad "key1" ja "key2" on täidetud infoga failist
+     application.properties võtmed "key1" ja "key2". Väljade väärtused tuleb peale süstida
+     (inject) Spring raamistiku võimalusi kasutades.
+
+  4. Dao liidesele vastava objekti.
+
+  Kõig vajalikud muudatudsed tuleb teha failidesse Config.java ja ProductDao1.java,
+  ProductDao2.java.
+
+  ProductDao1 või ProductDao2 klassidesse süstitud (injected) väärtused võivad olla
+  kas DataSource või String tüüpi.
+
+  Proovimiseks on klass Main.java või test SpringTest.
+
+  Lahendus peab läbima testid klassist SpringTest.
+
+Ülesanne 3 (15 punkti)
+
+  Konfigureerige Spring Security raamistik nii, et rakendusel oleks sisselogimise võimalus.
+
+  POST päring aadressile /login ja sisuga (body) "user=<kasutajanimi>&pass=<salasõna>"
+  peaks kasutaja sisse logima, kui salasõna on õige (määratud klassis security.SecurityConfig).
+
+  Muuta võite kõiki klasse paketis "security". Klasse ümber nimetada ei tohi.
+  Uusi klasse luua ei tohi.
+
+  Rakendus peab läbima testid klassist test.SecurityTest.

@@ -1,0 +1,88 @@
+plugins {
+    id 'war'
+    id 'org.gretty' version '4.0.3'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 17
+
+def springVersion = '6.0.2'
+def springSecurityVersion = '6.0.0'
+def jacksonVersion = '2.14.0'
+def lombokVersion = '1.18.24'
+def junitVersion = '4.13.2'
+
+dependencies {
+
+    compileOnly group: 'jakarta.servlet',
+            name: 'jakarta.servlet-api',
+            version: '6.0.0'
+
+    implementation group: 'org.springframework',
+            name: 'spring-context',
+            version: springVersion
+
+    implementation group: 'org.springframework',
+            name: 'spring-webmvc',
+            version: springVersion
+
+    implementation group: 'org.springframework',
+            name: 'spring-jdbc',
+            version: springVersion
+
+    implementation group: 'org.springframework.security',
+            name: 'spring-security-web',
+            version: springSecurityVersion
+
+    implementation group: 'org.springframework.security',
+            name: 'spring-security-config',
+            version: springSecurityVersion
+
+    implementation group: 'com.fasterxml.jackson.core',
+            name: 'jackson-databind',
+            version: jacksonVersion
+
+    implementation group: 'org.hsqldb',
+            name: 'hsqldb',
+            version: '2.7.1'
+
+    implementation group: 'org.slf4j',
+            name: 'slf4j-simple', version: '2.0.5'
+
+    testImplementation group: 'junit',
+            name: 'junit',
+            version: junitVersion
+
+    testImplementation group: 'org.springframework',
+            name: 'spring-test',
+            version: springVersion
+
+    testImplementation group: 'org.springframework.security',
+            name: 'spring-security-test',
+            version: springSecurityVersion
+
+    testImplementation group: 'jakarta.servlet',
+            name: 'jakarta.servlet-api',
+            version: '6.0.0'
+
+    compileOnly group: 'org.projectlombok',
+            name: 'lombok',
+            version: lombokVersion
+
+    annotationProcessor group: 'org.projectlombok',
+            name: 'lombok',
+            version: lombokVersion
+}
+
+tasks.register('runTest', JavaExec) {
+    mainClass.set('runner.Runner')
+
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+gretty {
+    contextPath = '/'
+}

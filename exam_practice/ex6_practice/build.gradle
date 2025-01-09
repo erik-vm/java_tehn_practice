@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'org.gretty' version '4.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+}
+
+def jacksonVersion = '2.14.0'
+def lombokVersion = '1.18.24'
+def junitVersion = '4.13.2'
+def springVersion = '6.0.9'
+
+dependencies {
+
+    compileOnly group: 'jakarta.servlet',
+            name: 'jakarta.servlet-api',
+            version: '6.0.0'
+
+    implementation group: 'com.fasterxml.jackson.core',
+            name: 'jackson-databind',
+            version: jacksonVersion
+
+    testImplementation group: 'junit',
+            name: 'junit',
+            version: junitVersion
+
+    testImplementation group: 'org.springframework',
+            name: 'spring-test',
+            version: springVersion
+
+    testImplementation group: 'jakarta.servlet',
+            name: 'jakarta.servlet-api',
+            version: '6.0.0'
+
+    compileOnly group: 'org.projectlombok',
+            name: 'lombok',
+            version: lombokVersion
+
+    annotationProcessor group: 'org.projectlombok',
+            name: 'lombok',
+            version: lombokVersion
+}
+
+tasks.register('runTest', JavaExec) {
+    mainClass.set('runner.Runner')
+
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+gretty {
+    contextPath = '/'
+}

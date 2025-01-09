@@ -1,0 +1,43 @@
+Teooriaküsimused
+
+  Vastused kirjutage siiasamasse faili küsimuse alla.
+  Iga küsimuse vastus peab jääma alla 200 märgi.
+  Iga küsimus annab kuni 5 punkti.
+
+  1. Projekti repositooriumis üldiselt jar faile ei hoita.
+     Üheks erandiks on gradle-wrapper.jar. Mida see teek sisaldab?
+
+     ... vastus tuleb siia ...
+
+  2. Servleti parameetrite kaudu (nt. request.getReader()...) ei saa päringu
+     sisu (body) mitu korda lugeda. Miks?
+
+     ... vastus tuleb siia ...
+
+Ülesanne 1 (20 punkti)
+
+  Kirjutage servlet, mis teeb järgmist.
+
+  Postitades aadressile /transform Json-i kujul
+
+  [ { "date": "17.12", "count": 5 },
+    { "date": "21.12", "count": 8 },
+    { "date": "18.12" },
+    { "date": "18.12", "count": 1 },
+    { "date": "23.12", "count": 3 },
+    { "date": "21.12", "count": 3 } ]
+
+  Väljastab rakendus kõik count võtme väärtused kokku liidetuna (antud juhul 20).
+
+  PUT pärning samale aadressile samade andmetega väljastab need kuupäevad,
+  mille "count" on üle ühe alloleval kujul.
+
+  {"result":[{"data":"17.12"},{"data":"21.12"},{"data":"23.12"}]}
+
+  Korduvad kuupäevad tuleb eemaldada ja esialgne järjekord peab säilima.
+
+  Muuta võite klasse MyServlet, A, B, C. Uusi klasse teha ei või.
+
+  Sisendi ja väljundi töötluseks peate kasutama mingit teeki (nt. ObjectMapper).
+
+  Kood peab läbima testid klassist test.ServletTest.

@@ -7,10 +7,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Objects;
-
-import static com.sun.tools.attach.VirtualMachine.list;
-import static org.springframework.jdbc.core.JdbcOperationsExtensionsKt.query;
 
 @Repository
 public class PersonDao {

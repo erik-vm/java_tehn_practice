@@ -1,0 +1,12 @@
+/.idea
+/.gradle
+/build
+/out
+
+*.iml
+*.class
+*.war
+*.jar
+
+!/monitor.jar
+!/gradle/wrapper/gradle-wrapper.jar
