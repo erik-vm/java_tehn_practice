@@ -24,3 +24,11 @@
 2) Define validation requirements within the model.
 3) Validate inputs in the controllers and create a general validation class.
 4) Create and run tests for the controllers and validation processes.
+
+### JPA Exercise
+#### This exercise focuses on the following topics:
+
+1) How to use JPA for data transfer. 
+2) Setting up a virtual HSQL server and using it to validate that the classes match the tables in the database.
+3) Creating relationships between models. 
+4) Setting up generic sequence for entities. 
