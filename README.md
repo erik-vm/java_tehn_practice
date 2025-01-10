@@ -32,3 +32,10 @@
 2) Setting up a virtual HSQL server and using it to validate that the classes match the tables in the database.
 3) Creating relationships between models. 
 4) Setting up generic sequence for entities. 
+
+### Security Exercise
+#### This exercise focuses on the following topics:
+
+1) Using Spring Security to grant permissions to different users.
+2) Authorizing with an API-based filter and a JWT-based filter.
+3) Running tests to ensure that the authorization is working.
