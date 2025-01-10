@@ -32,6 +32,8 @@ public class JwtAuthenticationFilter extends ApiAuthenticationFilter {
 
         User user = (User) authResult.getPrincipal();
 
+        System.out.println(user);
+
         List<String> roles = user.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
