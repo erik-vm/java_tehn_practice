@@ -14,7 +14,9 @@ public class PasswordEncoderTest {
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
 
-        String hash = encoder.encode("plaintext");
+        String hash = encoder.encode("admin");
+
+        System.out.println(hash);
 
         assertThat(hash, startsWith("$2a$10"));
         assertThat(hash.length(), is(60));

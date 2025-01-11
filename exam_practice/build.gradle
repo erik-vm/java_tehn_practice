@@ -1,0 +1,101 @@
+plugins {
+    id 'war'
+    id 'org.gretty' version '4.1.5'
+    id 'pmd'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+    mavenCentral()
+}
+
+def springVersion = '6.1.14'
+def jacksonVersion = '2.17.0'
+def lombokVersion = '1.18.34'
+def junitVersion = '4.13.2'
+def springSecurityVersion = '6.3.4'
+def hsqldbVersion = '2.7.3'
+
+
+dependencies {
+
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.1.0'
+
+    implementation group: 'org.springframework',
+            name: 'spring-context',
+            version: springVersion
+
+    implementation group: 'org.springframework',
+            name: 'spring-webmvc',
+            version: springVersion
+
+    implementation group: 'org.springframework',
+            name: 'spring-jdbc',
+            version: springVersion
+
+    implementation group: 'org.springframework.security',
+            name: 'spring-security-web',
+            version: springSecurityVersion
+
+    implementation group: 'org.springframework.security',
+            name: 'spring-security-web',
+            version: springSecurityVersion
+
+    implementation group: 'org.springframework.security',
+            name: 'spring-security-config',
+            version: springSecurityVersion
+
+    implementation group: 'org.springframework.security',
+            name: 'spring-security-oauth2-client',
+            version: springSecurityVersion
+
+    implementation group: 'org.springframework.security',
+            name: 'spring-security-oauth2-jose',
+            version: springSecurityVersion
+
+    implementation group: 'com.fasterxml.jackson.core',
+            name: 'jackson-databind',
+            version: jacksonVersion
+
+    implementation group: 'org.hsqldb',
+            name: 'hsqldb',
+            version: hsqldbVersion
+
+    implementation group: 'org.slf4j',
+            name: 'slf4j-simple', version: '2.0.5'
+
+    testImplementation group: 'junit',
+            name: 'junit',
+            version: junitVersion
+
+    testImplementation group: 'org.springframework',
+            name: 'spring-test',
+            version: springVersion
+
+    testImplementation group: 'org.springframework.security',
+            name: 'spring-security-test',
+            version: springSecurityVersion
+
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.1.0'
+
+    compileOnly group: 'org.projectlombok',
+            name: 'lombok',
+            version: lombokVersion
+
+    annotationProcessor group: 'org.projectlombok',
+            name: 'lombok',
+            version: lombokVersion
+}
+
+tasks.register('runTest', JavaExec) {
+    mainClass.set('runner.Runner')
+
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+gretty {
+    contextPath = '/'
+}
