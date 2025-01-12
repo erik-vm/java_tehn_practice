@@ -1,86 +1,79 @@
 plugins {
     id 'war'
     id 'org.gretty' version '4.1.5'
-    id 'pmd'
 }
 
+group = 'erik.vm'
+version = '0.0.1-SNAPSHOT'
+
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
     mavenCentral()
 }
 
-def springVersion = '6.1.14'
-def jacksonVersion = '2.17.0'
+def springVersion = '6.1.13'
 def lombokVersion = '1.18.34'
-def junitVersion = '4.13.2'
-def springSecurityVersion = '6.3.4'
-def hsqldbVersion = '2.7.3'
-
+def jacksonDataBindVersion = '2.17.0'
+def jacksonDataTypeVersion = '2.17.2'
+def hibernateValidatorVersion = '8.0.1.Final'
+def log4jVersion = '2.23.1'
+def hsqldbVersion = '2.6.1'
 
 dependencies {
 
-    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.1.0'
-
-    implementation group: 'org.springframework',
-            name: 'spring-context',
-            version: springVersion
-
-    implementation group: 'org.springframework',
-            name: 'spring-webmvc',
-            version: springVersion
-
-    implementation group: 'org.springframework',
-            name: 'spring-jdbc',
-            version: springVersion
-
-    implementation group: 'org.springframework.security',
-            name: 'spring-security-web',
-            version: springSecurityVersion
-
-    implementation group: 'org.springframework.security',
-            name: 'spring-security-web',
-            version: springSecurityVersion
-
-    implementation group: 'org.springframework.security',
-            name: 'spring-security-config',
-            version: springSecurityVersion
-
-    implementation group: 'org.springframework.security',
-            name: 'spring-security-oauth2-client',
-            version: springSecurityVersion
-
-    implementation group: 'org.springframework.security',
-            name: 'spring-security-oauth2-jose',
-            version: springSecurityVersion
-
+    //servlet
     implementation group: 'com.fasterxml.jackson.core',
             name: 'jackson-databind',
-            version: jacksonVersion
+            version: jacksonDataBindVersion
+
+    implementation group: 'com.fasterxml.jackson.datatype',
+            name: 'jackson-datatype-jsr310',
+            version: jacksonDataTypeVersion
+
+    compileOnly group: 'jakarta.servlet',
+            name: 'jakarta.servlet-api',
+            version: '6.1.0'
 
     implementation group: 'org.hsqldb',
             name: 'hsqldb',
             version: hsqldbVersion
 
-    implementation group: 'org.slf4j',
-            name: 'slf4j-simple', version: '2.0.5'
-
-    testImplementation group: 'junit',
-            name: 'junit',
-            version: junitVersion
-
-    testImplementation group: 'org.springframework',
-            name: 'spring-test',
+    //mvc
+    implementation group: 'org.springframework',
+            name: 'spring-webmvc',
             version: springVersion
 
-    testImplementation group: 'org.springframework.security',
-            name: 'spring-security-test',
-            version: springSecurityVersion
+    implementation group: 'jakarta.validation',
+            name: 'jakarta.validation-api',
+            version: '3.1.0'
 
-    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.1.0'
+    implementation group: 'org.hibernate',
+            name: 'hibernate-validator',
+            version: hibernateValidatorVersion
 
+    implementation group: 'org.glassfish',
+            name: 'jakarta.el',
+            version: '4.0.2'
+
+
+    //jdbc
+    implementation group: 'org.apache.commons',
+            name: 'commons-dbcp2',
+            version: '2.12.0'
+
+
+    //lombok
     compileOnly group: 'org.projectlombok',
             name: 'lombok',
             version: lombokVersion
@@ -88,12 +81,37 @@ dependencies {
     annotationProcessor group: 'org.projectlombok',
             name: 'lombok',
             version: lombokVersion
+
+    //logger
+    implementation group: 'org.apache.logging.log4j',
+            name: 'log4j-api',
+            version: log4jVersion
+
+    implementation group: 'org.apache.logging.log4j',
+            name: 'log4j-core',
+            version: log4jVersion
+
+
+
+    //test
+
+    testImplementation group: 'org.springframework',
+            name: 'spring-test',
+            version: springVersion
+
+    testImplementation group: 'org.junit.jupiter',
+            name: 'junit-jupiter-api',
+            version: '5.11.2'
+
+    testImplementation group: 'org.junit.jupiter',
+            name: 'junit-jupiter-engine',
+            version: '5.11.2'
+
+
 }
 
-tasks.register('runTest', JavaExec) {
-    mainClass.set('runner.Runner')
-
-    classpath = sourceSets.test.runtimeClasspath
+tasks.named('test') {
+    useJUnitPlatform()
 }
 
 gretty {
