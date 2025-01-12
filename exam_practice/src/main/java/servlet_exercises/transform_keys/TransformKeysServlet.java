@@ -1,4 +1,4 @@
-package servlet_exercises.transform;
+package servlet_exercises.transform_keys;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,8 +29,8 @@ import java.util.Map;
 //NB! Nõuded, mille eiramisel lahendust ei arvestatata.
 //     - Teksti käsitsi töötlemine (split, replace, match jne) ei ole lubatud.
 
-@WebServlet("/transform")
-public class TransformServlet extends HttpServlet {
+@WebServlet("/transform-keys")
+public class TransformKeysServlet extends HttpServlet {
 
     ObjectMapper mapper = new ObjectMapper();
 
